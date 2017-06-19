@@ -1,0 +1,19 @@
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    sha: 97b88d9610bcc03982ddac33caba98bb2b751f5f
+    hooks:
+    -   id: check-added-large-files
+    -   id: check-ast
+    -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: check-xml
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: detect-private-key
+    -   id: flake8
+        args:
+        - --ignore=F841,E402,E501
+        - --builtins=G,request
+        - --jobs=1
+    -   id: end-of-file-fixer
