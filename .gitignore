@@ -94,4 +94,5 @@ db.sqlite3
 # Rope project settings
 .ropeproject
 /config.py
-/fitness/migrations/
+
+/application/migrations/

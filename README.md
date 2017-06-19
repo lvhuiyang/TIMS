@@ -1,3 +1,3 @@
-## light_fitness
+## 教师信息管理系统
 
-基于django (version 1.11)的轻量级 fitness 的实现，现用于 .net课程设计的服务端。
+基于django (version 1.11)的教师信息管理系统。
