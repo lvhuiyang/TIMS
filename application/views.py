@@ -11,3 +11,8 @@ class Index(View):
 class Hello(TemplateView):
     def get(self, request, *args, **kwargs):
         return render(request=request, template_name="base.html", context={'hello': 'world'})
+
+
+class Login(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return render(request=request, template_name="login.html", context={'hello': 'world'})
