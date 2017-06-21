@@ -20,7 +20,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">主页</a>
+            <a class="navbar-brand" href="{{ url('index') }}">主页</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,15 +40,23 @@
                 <li><a href="#">成绩查询</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登录</a></li>
+                {% if request.user.is_authenticated() %}
+                    <li>{{ request.user.username }}</li>
+                {% else %}
+                    <li><a href="{{ url('login') }}">登录</a></li>
+                {% endif %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">我的信息 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">修改密码</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出系统</a></li>
+                        {% if request.user.is_authenticated() %}
+                            <li><a href="#">个人资料</a></li>
+                            <li><a href="#">修改密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">退出系统</a></li>
+                        {% else %}
+                            <li><a href="{{ url('login') }}">当前未登录</a></li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>
