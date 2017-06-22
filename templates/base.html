@@ -41,7 +41,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated() %}
-                    <li>{{ request.user.username }}</li>
+                    <li><a>{{ request.user.username }}</a></li>
                 {% else %}
                     <li><a href="{{ url('login') }}">登录</a></li>
                 {% endif %}
@@ -53,7 +53,7 @@
                             <li><a href="#">个人资料</a></li>
                             <li><a href="#">修改密码</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">退出系统</a></li>
+                            <li><a href="{{ url('logout') }}">退出系统</a></li>
                         {% else %}
                             <li><a href="{{ url('login') }}">当前未登录</a></li>
                         {% endif %}
@@ -64,6 +64,18 @@
     </div>
 </nav>
 <main>
+
+    <div class="container">
+        {% if messages %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                {% for message in messages %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>{{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
     {% block main %}{% endblock %}
 </main>
 <div id="footer" class="container">

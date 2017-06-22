@@ -4,24 +4,20 @@
 
 {% block main %}
     <div class="container">
-        {% if check_authenticated %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <strong>注意 ！</strong> 您必须登录后才可使用此功能, 系统已经自动将您带到登录界面。
-            </div>
-        {% endif %}
         <div class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <form role="form">
+                <form role="form" action="{{ url('login') }}" method="post">
+                    {{ csrf_input }}
                     <div class="form-group">
-                        <label for="exampleInputEmail1">用户名</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入用户名">
+                        <label for="username-text">用户名</label>
+                        <input type="text" class="form-control" id="username-text"
+                               placeholder="请输入用户名" name="username">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">密码</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" id="password"
+                               placeholder="请输入密码" name="password">
                     </div>
                     <div class="checkbox">
                         <label>
