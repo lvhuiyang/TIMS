@@ -22,7 +22,7 @@ class Base(View):
 
 class Index(View):
     def get(self, request, *args, **kwargs):
-        return render(request=request, template_name="index.html", context={"messages": get_messages(request)})
+        return render(request=request, template_name="index.html")
 
 
 class Login(View):
@@ -33,11 +33,10 @@ class Login(View):
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user:
             login(request, user)
-            messages.add_message(request, messages.INFO, '登录成功')
             return redirect(to=reverse("index"))
         else:
-            messages.add_message(request, messages.INFO, '登录失败')
-            return redirect(to=reverse("index"))
+            messages.add_message(request, messages.INFO, '登录失败, 请检查用户名密码')
+            return redirect(to=reverse("login"))
 
 
 class Logout(CheckUserAuthenticatedMixin, View):
@@ -45,3 +44,8 @@ class Logout(CheckUserAuthenticatedMixin, View):
         logout(request)
         messages.add_message(request, messages.INFO, '成功退出系统， 您当前已退出。')
         return redirect(to="login")
+
+
+class MyInfo(CheckUserAuthenticatedMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request=request, template_name="my_info.html")

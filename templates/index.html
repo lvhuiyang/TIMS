@@ -1,3 +1,62 @@
 {% extends "base.html" %}
 
 {% block title %}主页{% endblock %}
+
+{% block main %}
+    <div class="jumbotron" style="padding-left: 80px; margin-top: -20px">
+        <h2>Welcome to SDUT Teacher Information Management System.</h2>
+        <p>欢迎使用教师信息管理系统.</p>
+        {% if request.user.is_authenticated() %}
+            <p>
+                <a class="btn btn-info" role="button" style="width: 120px; margin-top: 20px">您已登录</a>
+            </p>
+        {% else %}
+            <p>
+                <a class="btn btn-info" href="{{ url('login') }}"
+                   role="button" style="width: 120px; margin-top: 20px">登录系统</a>
+            </p>
+        {% endif %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 ">
+                <div class="thumbnail" style="padding: 10px">
+                    <img src="{{ static('/img/student.png') }}" style="height: 100px; width: 130px">
+                    <h4 style="padding-left: 60px">人员关系信息管理， 包括：</h4>
+                    <div style="padding-left: 20px; font-size: 16px">
+                        <ul>
+                            <li style="margin-top: 20px">学生、教师信息管理</li>
+                            <li style="margin-bottom: 40px">学院、专业、班级信息管理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 ">
+                <div class="thumbnail" style="padding: 10px">
+                    <img src="{{ static('/img/exam.png') }}" style="height: 100px; width: 130px">
+                    <h4 style="padding-left: 60px">考试安排管理， 包括：</h4>
+                    <div style="padding-left: 30px; font-size: 16px">
+                        <ul>
+                            <li style="margin-top: 20px">考试相关科目安排</li>
+                            <li>考试成绩批阅</li>
+                            <li style="margin-bottom: 19px">考试信息通知</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 ">
+                <div class="thumbnail" style="padding: 10px">
+                    <img src="{{ static('/img/score.png') }}" style="height: 100px; width: 130px">
+                    <h4 style="padding-left: 60px">成绩信息管理， 包括：</h4>
+                    <div style="padding-left: 30px; font-size: 16px">
+                        <ul>
+                            <li style="margin-top: 20px">成绩权限管理</li>
+                            <li>成绩录入、查询</li>
+                            <li style="margin-bottom: 19px">成绩信息通知</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
