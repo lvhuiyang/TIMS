@@ -43,5 +43,5 @@ class Login(View):
 class Logout(CheckUserAuthenticatedMixin, View):
     def get(self, request, *args, **kwargs):
         logout(request)
-        messages.add_message(request, messages.INFO, '退出系统成功， 您当前已退出。')
+        messages.add_message(request, messages.INFO, '成功退出系统， 您当前已退出。')
         return redirect(to="login")
