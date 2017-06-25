@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
     user = models.ForeignKey(User)
+    username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
 
 
 class Institute(models.Model):
@@ -28,6 +29,7 @@ class Class(models.Model):
 
 
 class Student(models.Model):
+    username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
     user = models.ForeignKey(User)
     the_class = models.ForeignKey(Class)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
@@ -35,6 +37,7 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
+    username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
     user = models.ForeignKey(User)
     institute = models.ForeignKey(Institute)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
@@ -42,6 +45,7 @@ class Teacher(models.Model):
 
 
 class TeacherClassShip(models.Model):
+    username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
     teacher = models.ForeignKey(Teacher)
     the_class = models.ForeignKey(Class)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)

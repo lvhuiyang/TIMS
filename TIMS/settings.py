@@ -88,7 +88,10 @@ DATABASES = {
         'PORT': '3306',
         'CHARSET': 'utf8',
         'COLLATION': 'utf8_general_ci',
-    }
+    },
+    'OPTIONS': {
+        'read_default_file': '/usr/local/mysql/support-files/my-default.cnf',
+    },
 }
 
 # Password validation
