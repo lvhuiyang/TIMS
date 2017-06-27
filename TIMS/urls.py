@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from application.views import Base, Index, Login, Logout, MyInfo, ChangePassword, \
     InstituteInfoView, MajorInfoView, ClassInfoView, TeacherInfoView, StudentInfoView
 
@@ -19,3 +20,5 @@ urlpatterns = [
     url(r'^info/student/', StudentInfoView.as_view(), name="student_info"),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()

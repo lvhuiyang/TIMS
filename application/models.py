@@ -10,6 +10,9 @@ class Admin(models.Model):
     user = models.OneToOneField(User, verbose_name="指定用户")
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
 
+    def __str__(self):
+        return self.username
+
 
 class Institute(models.Model):
     class Meta:
@@ -18,6 +21,9 @@ class Institute(models.Model):
     name = models.CharField(verbose_name="学院名称", max_length=64, default="", blank=False, null=False)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
+
+    def __str__(self):
+        return self.name
 
 
 class Major(models.Model):
@@ -29,6 +35,9 @@ class Major(models.Model):
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
+    def __str__(self):
+        return self.name
+
 
 class Class(models.Model):
     class Meta:
@@ -38,6 +47,9 @@ class Class(models.Model):
     major = models.ForeignKey(Major, verbose_name="指定专业")
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
+
+    def __str__(self):
+        return self.name
 
 
 class Student(models.Model):
@@ -50,6 +62,9 @@ class Student(models.Model):
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
+    def __str__(self):
+        return self.username
+
 
 class Teacher(models.Model):
     class Meta:
@@ -61,6 +76,9 @@ class Teacher(models.Model):
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
+    def __str__(self):
+        return self.username
+
 
 class TeacherClassShip(models.Model):
     class Meta:
@@ -70,6 +88,9 @@ class TeacherClassShip(models.Model):
     the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
+
+    def __str__(self):
+        return self.id
 
 
 class Course(models.Model):
@@ -81,6 +102,9 @@ class Course(models.Model):
     the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Exam(models.Model):
     class Meta:
@@ -89,3 +113,6 @@ class Exam(models.Model):
     course = models.ForeignKey(Course, verbose_name="指定课程")
     student = models.ForeignKey(Student, verbose_name="指定学生")
     score = models.IntegerField(verbose_name="考试分数", blank=True, null=True)
+
+    def __str__(self):
+        return self.id
