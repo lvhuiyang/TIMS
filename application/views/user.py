@@ -25,7 +25,7 @@ class Base(View):
 
 class Index(View):
     def get(self, request, *args, **kwargs):
-        return render(request=request, template_name="index.html")
+        return render(request=request, template_name="index.html", context={"messages": get_messages(request)})
 
 
 class Login(View):
@@ -72,3 +72,30 @@ class MyInfo(CheckUserAuthenticatedMixin, View):
             'create_at': user_obj.create_at
         }
         return render(request=request, template_name="my_info.html", context={'data': data})
+
+
+class ChangePassword(CheckUserAuthenticatedMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request=request,
+                      template_name="change_password.html",
+                      context={"messages": get_messages(request)})
+
+    def post(self, request, *args, **kwargs):
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        if confirm_password != new_password or len(new_password) < 8:
+            messages.add_message(request, messages.INFO, '修改失败, 两次密码输入不一致或者新密码长度不规范')
+            return redirect(to="change_password")
+        if not request.user.check_password(old_password):
+            messages.add_message(request, messages.INFO, '修改失败, 原密码不正确')
+            return redirect(to="change_password")
+        try:
+            request.user.set_password(new_password)
+            request.user.save()
+        except Exception:
+            messages.add_message(request, messages.INFO, '修改失败')
+            return redirect(to="change_password")
+        else:
+            messages.add_message(request, messages.INFO, '修改成功')
+            return redirect(to="login")

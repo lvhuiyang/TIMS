@@ -1,4 +1,4 @@
-from .user import CheckUserAuthenticatedMixin, Base, Index, Login, Logout, MyInfo
+from .user import CheckUserAuthenticatedMixin, Base, Index, Login, Logout, MyInfo, ChangePassword
 
 __all__ = [
     CheckUserAuthenticatedMixin,
@@ -6,5 +6,6 @@ __all__ = [
     Index,
     Login,
     Logout,
-    MyInfo
+    MyInfo,
+    ChangePassword
 ]

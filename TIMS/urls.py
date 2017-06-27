@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from application.views import Base, Index, Login, Logout, MyInfo
+from application.views import Base, Index, Login, Logout, MyInfo, ChangePassword
 
 app_name = 'tims'
 urlpatterns = [
@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', Logout.as_view(), name="logout"),
     url(r'^my_info/$', MyInfo.as_view(), name="my_info"),
+    url(r'^change_password/$', ChangePassword.as_view(), name="change_password"),
 
 ]

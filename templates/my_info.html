@@ -4,13 +4,16 @@
 
 {% block main %}
     <div class="container">
-        <div class="row">
+        <div class="row" style="padding-top: 100px">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <h1>{{ data['username'] }}</h1>
-                <h1>{{ data['role'] }}</h1>
-                <h1>{{ data['create_by'] }}</h1>
-                <h1>{{ data['create_at'] }}</h1>
+                <p style="padding-bottom: 20px; color: #8b4b1e; font-size: 26px">您已登录，当前用户信息如下</p>
+                <div style="font-size: 20px">
+                    <p>用户名：{{ data['username'] }}</p>
+                    <p>角色：{{ data['role'] }}</p>
+                    <p>创建人：{{ data['create_by'] }}</p>
+                    <p>创建时间：{{ data['create_at'] }}</p>
+                </div>
             </div>
             <div class="col-lg-4"></div>
         </div>
