@@ -4,81 +4,88 @@ from django.contrib.auth.models import User
 
 
 class Admin(models.Model):
-    user = models.OneToOneField(User)
+    class Meta:
+        verbose_name = "管理员"
+
+    user = models.OneToOneField(User, verbose_name="指定用户")
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
 
 
 class Institute(models.Model):
+    class Meta:
+        verbose_name = "学院"
+
     name = models.CharField(verbose_name="学院名称", max_length=64, default="", blank=False, null=False)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class Major(models.Model):
+    class Meta:
+        verbose_name = "专业"
+
     name = models.CharField(verbose_name="专业名称", max_length=64, default="", blank=False, null=False)
-    institute = models.ForeignKey(Institute)
+    institute = models.ForeignKey(Institute, verbose_name="指定学院")
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class Class(models.Model):
+    class Meta:
+        verbose_name = "班级"
+
     name = models.CharField(verbose_name="班级名称", max_length=64, default="", blank=False, null=False)
-    major = models.ForeignKey(Major)
+    major = models.ForeignKey(Major, verbose_name="指定专业")
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class Student(models.Model):
+    class Meta:
+        verbose_name = "学生"
+
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
-    user = models.OneToOneField(User)
-    the_class = models.ForeignKey(Class)
+    user = models.OneToOneField(User, verbose_name="用户名")
+    the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class Teacher(models.Model):
+    class Meta:
+        verbose_name = "教师"
+
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
-    user = models.OneToOneField(User)
-    institute = models.ForeignKey(Institute)
+    user = models.OneToOneField(User, verbose_name="指定用户")
+    marjor = models.ForeignKey(Major, verbose_name="指定专业", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class TeacherClassShip(models.Model):
-    username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
-    teacher = models.ForeignKey(Teacher)
-    the_class = models.ForeignKey(Class)
+    class Meta:
+        verbose_name = "教师班级关系"
+
+    teacher = models.ForeignKey(Teacher, verbose_name="指定教师")
+    the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(Admin)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
 
 class Course(models.Model):
+    class Meta:
+        verbose_name = "课程"
+
     name = models.CharField(verbose_name="课程名称", max_length=64, default="", blank=False, null=False)
-    teacher = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher, verbose_name="指定教师")
+    the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-
-
-class StudentCourseShip(models.Model):
-    student = models.ForeignKey(Student)
-    course = models.ForeignKey(Course)
-    create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(User)
 
 
 class Exam(models.Model):
-    course = models.ForeignKey(Course)
-    student = models.ForeignKey(Student)
+    class Meta:
+        verbose_name = "考试"
+
+    course = models.ForeignKey(Course, verbose_name="指定分数")
+    student = models.ForeignKey(Student, verbose_name="指定学生")
     score = models.IntegerField(verbose_name="考试分数", blank=True, null=True)
-
-
-class MessageLog(models.Model):
-    title = models.CharField(verbose_name="消息主题", max_length=256, default="", blank=False, null=False)
-    content = models.CharField(verbose_name="消息内容", max_length=256, default="", blank=False, null=False)
-    create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
-    create_by = models.ForeignKey(User)
-
-
-class MessageUserShip(models.Model):
-    message = models.ForeignKey(MessageLog)
-    user = models.ForeignKey(User)
-    have_read = models.BooleanField(verbose_name="是否已读", default=False, blank=False, null=False)

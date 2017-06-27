@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}学院信息{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="table-responsive" style="padding-top: 30px">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>学院名称</th>
+                    <th>创建时间</th>
+                    <th>创建人</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for institute in institutes %}
+                    <tr>
+                        <td class="institute_id">{{ institute.id }}</td>
+                        <td>{{ institute.name }}</td>
+                        <td>{{ institute.create_at }}</td>
+                        <td>{{ institute.create_by.username }}</td>
+                        <td>
+                            <button class="btn btn-info detail_show">修改此记录</button>
+                            <button class="btn btn-danger delete" style="margin-left: 10px">删除此记录</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if detail_institute %}
+            <div class="row" style="margin-top: 50px">
+                <div class="col-lg-6">
+                    <form role="form" action="{{ url('institute_info') }}" method="post">
+                        {{ csrf_input }}
+                        <input type="hidden" id="hidden_id" value="{{ detail_institute.id }}"/>
+                        <div class="form-group">
+                            <label for="username-text">学院名称</label>
+                            <input type="text" class="form-control" id="username-text"
+                                   value="{{ detail_institute.name }}" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="create_at">创建时间（不可更改）</label>
+                            <input type="text" class="form-control" id="create_at"
+                                   placeholder="{{ detail_institute.create_at }}" name="create_at" disabled="disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">创建人</label>
+                            <select id="role" name="user_id" class="form-control">
+                                {% for admin in admins %}
+                                    <option value="{{ admin.id }}">{{ admin.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="margin-top: 20px">
+                            <button type="submit" class="btn btn-info" style="width: 100px; margin-left: 5px">确认
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6"></div>
+            </div>
+        {% endif %}
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".delete").click(function () {
+                alert("存在关联信息的数据不可删除");
+            });
+
+            $(".detail_show").click(function () {
+                var institute_id = $(this).parent().parent().find(".institute_id").text();
+                redirect_url = "http://127.0.0.1:8888/info/institute/?institute_id=" + institute_id;
+                window.location.href = redirect_url;
+            });
+        });
+    </script>
+{% endblock %}
