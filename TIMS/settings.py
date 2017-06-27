@@ -79,14 +79,21 @@ WSGI_APPLICATION = 'TIMS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+DB_HOST = os.environ.get('DB_HOST') or '127.0.0.1'
+DB_PORT = os.environ.get('DB_PORT') or '3306'
+DB_NAME = os.environ.get('DB_NAME') or 'tims_db'
+DB_USER = os.environ.get('DB_USER') or 'root'
+DB_PASSWORD = os.environ.get('PASSWORD') or ''
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tims_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
         'CHARSET': 'utf8',
         'COLLATION': 'utf8_general_ci',
     },
