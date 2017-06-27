@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}学院信息{% endblock %}
+{% block title %}班级信息{% endblock %}
 
 {% block main %}
     <div class="container">
@@ -9,19 +9,21 @@
                 <thead>
                 <tr>
                     <th>序号</th>
-                    <th>学院名称</th>
+                    <th>班级名称</th>
+                    <th>所属专业</th>
                     <th>创建时间</th>
                     <th>创建人</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for institute in institutes %}
+                {% for a_class in classes %}
                     <tr>
-                        <td class="institute_id">{{ institute.id }}</td>
-                        <td>{{ institute.name }}</td>
-                        <td>{{ institute.create_at }}</td>
-                        <td>{{ institute.create_by.username }}</td>
+                        <td class="class_id">{{ a_class.id }}</td>
+                        <td>{{ a_class.name }}</td>
+                        <td>{{ a_class.major.name }}</td>
+                        <td>{{ a_class.create_at }}</td>
+                        <td>{{ a_class.create_by.username }}</td>
                         <td>
                             <button class="btn btn-info detail_show">修改此记录</button>
                             <button class="btn btn-danger delete" style="margin-left: 10px">删除此记录</button>
@@ -32,25 +34,33 @@
             </table>
         </div>
 
-        {% if detail_institute %}
+        {% if detail_class %}
             <div class="row" style="margin-top: 50px">
                 <div class="col-lg-6">
-                    <form role="form" action="{{ url('institute_info') }}" method="post">
+                    <form role="form" action="{{ url('class_info') }}" method="post">
                         {{ csrf_input }}
-                        <input type="hidden" name="hidden_id" value="{{ detail_institute.id }}"/>
+                        <input type="hidden" name="hidden_id" value="{{ detail_class.id }}"/>
                         <div class="form-group">
-                            <label for="institute_name">学院名称</label>
-                            <input type="text" class="form-control" id="institute_name"
-                                   value="{{ detail_institute.name }}" name="institute_name">
+                            <label for="class_name">班级名称</label>
+                            <input type="text" class="form-control" id="class_name"
+                                   value="{{ detail_class.name }}" name="class_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">所在专业</label>
+                            <select id="role" name="major_id" class="form-control">
+                                {% for major in majors %}
+                                    <option value="{{ major.id }}">{{ major.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="create_at">创建时间（不可更改）</label>
                             <input type="text" class="form-control" id="create_at"
-                                   placeholder="{{ detail_institute.create_at }}" name="create_at" disabled="disabled">
+                                   placeholder="{{ detail_class.create_at }}" name="create_at" disabled="disabled">
                         </div>
                         <div class="form-group">
                             <label for="role">创建人</label>
-                            <select id="role" name="user_id" class="form-control">
+                            <select id="role" name="admin_id" class="form-control">
                                 {% for admin in admins %}
                                     <option value="{{ admin.id }}">{{ admin.username }}</option>
                                 {% endfor %}
@@ -73,8 +83,8 @@
             });
 
             $(".detail_show").click(function () {
-                var institute_id = $(this).parent().parent().find(".institute_id").text();
-                redirect_url = "/info/institute/?institute_id=" + institute_id;
+                var class_id = $(this).parent().parent().find(".class_id").text();
+                redirect_url = "/info/class/?class_id=" + class_id;
                 window.location.href = redirect_url;
             });
         });

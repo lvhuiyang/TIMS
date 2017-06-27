@@ -86,6 +86,6 @@ class Exam(models.Model):
     class Meta:
         verbose_name = "考试"
 
-    course = models.ForeignKey(Course, verbose_name="指定分数")
+    course = models.ForeignKey(Course, verbose_name="指定课程")
     student = models.ForeignKey(Student, verbose_name="指定学生")
     score = models.IntegerField(verbose_name="考试分数", blank=True, null=True)
