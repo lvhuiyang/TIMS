@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.messages import get_messages
-from application.models import Institute, Admin, Major, Class
+from application.models import Institute, Admin, Major, Class, Student, Teacher
 from application.views import CheckUserAuthenticatedMixin
 
 
@@ -114,7 +114,7 @@ class ClassInfoView(CheckUserAuthenticatedMixin, View):
         admin_id = request.POST['admin_id']
 
         major_obj = Major.objects.get(id=major_id)
-        class_obj = Institute.objects.get(id=class_id)
+        class_obj = Class.objects.get(id=class_id)
         admin_obj = Admin.objects.get(id=admin_id)
 
         class_obj.name = class_name
@@ -127,15 +127,83 @@ class ClassInfoView(CheckUserAuthenticatedMixin, View):
 
 class StudentInfoView(CheckUserAuthenticatedMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request=request, template_name="info/institute.html")
+        students = Student.objects.all()
+        classes = Class.objects.all()
+        admins = None
+        detail_student = None
+        get_params = request.GET.dict()
+        student_id = get_params.get("student_id", None)
+        if student_id:
+            detail_student = Student.objects.filter(id=student_id).first()
+            admins = Admin.objects.all()
+            if detail_student is None:
+                return redirect(to="class_info")
+
+        return render(request=request,
+                      template_name="info/student.html",
+                      context={
+                          "classes": classes,
+                          'admins': admins,
+                          'detail_student': detail_student,
+                          'students': students,
+                          'messages': get_messages(request)
+                      })
 
     def post(self, request, *args, **kwargs):
-        return render(request=request, template_name="info/institute.html")
+        student_name = request.POST['student_name']
+        student_id = request.POST['student_id']
+        class_id = request.POST['class_id']
+        admin_id = request.POST['admin_id']
+
+        class_obj = Class.objects.get(id=class_id)
+        student_obj = Student.objects.get(id=student_id)
+        admin_obj = Admin.objects.get(id=admin_id)
+
+        student_obj.username = student_name
+        student_obj.create_by = admin_obj
+        student_obj.the_class = class_obj
+        student_obj.save()
+        messages.add_message(request, messages.INFO, '修改学生信息成功')
+        return redirect(to='student_info')
 
 
 class TeacherInfoView(CheckUserAuthenticatedMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request=request, template_name="info/institute.html")
+        majors = Major.objects.all()
+        teachers = Teacher.objects.all()
+        admins = None
+        detail_teacher = None
+        get_params = request.GET.dict()
+        teacher_id = get_params.get("teacher_id", None)
+        if teacher_id:
+            detail_teacher = Teacher.objects.filter(id=teacher_id).first()
+            admins = Admin.objects.all()
+            if detail_teacher is None:
+                return redirect(to="teacher_info")
+
+        return render(request=request,
+                      template_name="info/teacher.html",
+                      context={
+                          "majors": majors,
+                          'admins': admins,
+                          'detail_teacher': detail_teacher,
+                          'teachers': teachers,
+                          'messages': get_messages(request)
+                      })
 
     def post(self, request, *args, **kwargs):
-        return render(request=request, template_name="info/institute.html")
+        teacher_name = request.POST['teacher_name']
+        teacher_id = request.POST['teacher_id']
+        major_id = request.POST['major_id']
+        admin_id = request.POST['admin_id']
+
+        major_obj = Major.objects.get(id=major_id)
+        teacher_obj = Teacher.objects.get(id=teacher_id)
+        admin_obj = Admin.objects.get(id=admin_id)
+
+        teacher_obj.username = teacher_name
+        teacher_obj.create_by = admin_obj
+        teacher_obj.major = major_obj
+        teacher_obj.save()
+        messages.add_message(request, messages.INFO, '修改专业信息成功')
+        return redirect(to='teacher_info')

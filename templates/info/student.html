@@ -9,21 +9,21 @@
                 <thead>
                 <tr>
                     <th>序号</th>
-                    <th>班级名称</th>
-                    <th>所属专业</th>
+                    <th>学生姓名</th>
+                    <th>所属班级</th>
                     <th>创建时间</th>
                     <th>创建人</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for a_class in classes %}
+                {% for student in students %}
                     <tr>
-                        <td class="class_id">{{ a_class.id }}</td>
-                        <td>{{ a_class.name }}</td>
-                        <td>{{ a_class.major.name }}</td>
-                        <td>{{ a_class.create_at }}</td>
-                        <td>{{ a_class.create_by.username }}</td>
+                        <td class="student_id">{{ student.id }}</td>
+                        <td>{{ student.username }}</td>
+                        <td>{{ student.the_class.name }}</td>
+                        <td>{{ student.create_at }}</td>
+                        <td>{{ student.create_by.username }}</td>
                         <td>
                             <button class="btn btn-info detail_show">修改此记录</button>
                             <button class="btn btn-danger delete" style="margin-left: 10px">删除此记录</button>
@@ -34,29 +34,29 @@
             </table>
         </div>
 
-        {% if detail_class %}
+        {% if detail_student %}
             <div class="row" style="margin-top: 50px">
                 <div class="col-lg-6">
-                    <form role="form" action="{{ url('class_info') }}" method="post">
+                    <form role="form" action="{{ url('student_info') }}" method="post">
                         {{ csrf_input }}
-                        <input type="hidden" name="hidden_id" value="{{ detail_class.id }}"/>
+                        <input type="hidden" name="student_id" value="{{ detail_student.id }}"/>
                         <div class="form-group">
-                            <label for="class_name">班级名称</label>
-                            <input type="text" class="form-control" id="class_name"
-                                   value="{{ detail_class.name }}" name="class_name">
+                            <label for="student_name">学生姓名</label>
+                            <input type="text" class="form-control" id="student_name"
+                                   value="{{ detail_student.username }}" name="student_name">
                         </div>
                         <div class="form-group">
-                            <label for="role">所在专业</label>
-                            <select id="role" name="major_id" class="form-control">
-                                {% for major in majors %}
-                                    <option value="{{ major.id }}">{{ major.name }}</option>
+                            <label for="role">所在班级</label>
+                            <select id="role" name="class_id" class="form-control">
+                                {% for class in classes %}
+                                    <option value="{{ class.id }}">{{ class.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="create_at">创建时间（不可更改）</label>
                             <input type="text" class="form-control" id="create_at"
-                                   placeholder="{{ detail_class.create_at }}" name="create_at" disabled="disabled">
+                                   placeholder="{{ detail_student.create_at }}" name="create_at" disabled="disabled">
                         </div>
                         <div class="form-group">
                             <label for="role">创建人</label>
@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         <div style="margin-top: 20px">
-                            <button type="submit" class="btn btn-info" style="width: 100px; margin-left: 5px">确认
+                            <button type="submit" class="btn btn-info" style="width: 100px;">确认
                             </button>
                         </div>
                     </form>
@@ -83,8 +83,8 @@
             });
 
             $(".detail_show").click(function () {
-                var class_id = $(this).parent().parent().find(".class_id").text();
-                redirect_url = "/info/class/?class_id=" + class_id;
+                var student_id = $(this).parent().parent().find(".student_id").text();
+                redirect_url = "/info/student/?student_id=" + student_id;
                 window.location.href = redirect_url;
             });
         });

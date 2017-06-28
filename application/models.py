@@ -57,7 +57,7 @@ class Student(models.Model):
         verbose_name = "学生"
 
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
-    user = models.OneToOneField(User, verbose_name="用户名")
+    user = models.OneToOneField(User, verbose_name="指定用户")
     the_class = models.ForeignKey(Class, verbose_name="指定班级", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
@@ -72,7 +72,7 @@ class Teacher(models.Model):
 
     username = models.CharField(verbose_name="用户名", max_length=256, blank=False, null=False, default="")
     user = models.OneToOneField(User, verbose_name="指定用户")
-    marjor = models.ForeignKey(Major, verbose_name="指定专业", blank=True, null=True)
+    major = models.ForeignKey(Major, verbose_name="指定专业", blank=True, null=True)
     create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
     create_by = models.ForeignKey(Admin, verbose_name="创建者")
 
