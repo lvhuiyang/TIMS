@@ -1,5 +1,6 @@
 from .user import CheckUserAuthenticatedMixin, Base, Index, Login, Logout, MyInfo, ChangePassword
 from .info import InstituteInfoView, MajorInfoView, ClassInfoView, TeacherInfoView, StudentInfoView
+from .exam import ExamView, ExamPointView
 
 __all__ = [
     CheckUserAuthenticatedMixin,
@@ -13,5 +14,7 @@ __all__ = [
     MajorInfoView,
     ClassInfoView,
     TeacherInfoView,
-    StudentInfoView
+    StudentInfoView,
+    ExamView,
+    ExamPointView
 ]

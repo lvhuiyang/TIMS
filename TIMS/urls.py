@@ -2,7 +2,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from application.views import Base, Index, Login, Logout, MyInfo, ChangePassword, \
-    InstituteInfoView, MajorInfoView, ClassInfoView, TeacherInfoView, StudentInfoView
+    InstituteInfoView, MajorInfoView, ClassInfoView, TeacherInfoView, StudentInfoView, \
+    ExamView, ExamPointView
 
 app_name = 'tims'
 urlpatterns = [
@@ -18,6 +19,8 @@ urlpatterns = [
     url(r'^info/class/', ClassInfoView.as_view(), name="class_info"),
     url(r'^info/teacher/', TeacherInfoView.as_view(), name="teacher_info"),
     url(r'^info/student/', StudentInfoView.as_view(), name="student_info"),
+    url(r'^exam/exam/', ExamView.as_view(), name="exam"),
+    url(r'^exam/point/', ExamPointView.as_view(), name="exam_point"),
 
 ]
 

@@ -36,8 +36,8 @@
                         <li><a href="{{ url('student_info') }}">学生信息</a></li>
                     </ul>
                 </li>
-                <li><a href="#">考试安排</a></li>
-                <li><a href="#">成绩查询</a></li>
+                <li><a href="{{ url('exam') }}">考试安排</a></li>
+                <li><a href="{{ url('exam_point') }}">成绩查询</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated() %}

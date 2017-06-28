@@ -113,6 +113,9 @@ class Exam(models.Model):
     course = models.ForeignKey(Course, verbose_name="指定课程")
     student = models.ForeignKey(Student, verbose_name="指定学生")
     score = models.IntegerField(verbose_name="考试分数", blank=True, null=True)
+    title = models.CharField(verbose_name="主题", blank=True, null=True, max_length=1024)
+    create_at = models.DateTimeField(verbose_name="创建时间", blank=True, null=True)
+    create_by = models.ForeignKey(Admin, verbose_name="创建者", blank=True, null=True)
 
     def __str__(self):
-        return self.id
+        return self.title

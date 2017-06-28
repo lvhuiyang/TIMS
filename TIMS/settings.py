@@ -83,7 +83,7 @@ DB_HOST = os.environ.get('DB_HOST') or '127.0.0.1'
 DB_PORT = os.environ.get('DB_PORT') or '3306'
 DB_NAME = os.environ.get('DB_NAME') or 'tims_db'
 DB_USER = os.environ.get('DB_USER') or 'root'
-DB_PASSWORD = os.environ.get('PASSWORD') or ''
+DB_PASSWORD = os.environ.get('DB_PASSWORD') or ''
 
 
 DATABASES = {
@@ -101,6 +101,8 @@ DATABASES = {
         'read_default_file': '/usr/local/mysql/support-files/my-default.cnf',
     },
 }
+
+print("Database config is : {}".format(DATABASES))
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
