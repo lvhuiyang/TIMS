@@ -4,6 +4,7 @@ from django.views import View
 from django.contrib.messages import get_messages
 from application.models import Institute, Admin, Major, Class, Student, Teacher
 from application.views import CheckUserAuthenticatedMixin
+from django.http import HttpResponse
 
 
 class InstituteInfoView(CheckUserAuthenticatedMixin, View):
@@ -150,8 +151,13 @@ class StudentInfoView(CheckUserAuthenticatedMixin, View):
                       })
 
     def post(self, request, *args, **kwargs):
-        student_name = request.POST['student_name']
         student_id = request.POST['student_id']
+        type = request.POST['type']
+        if type == "delete":
+            student_obj = Student.objects.get(id=student_id)
+            student_obj.delete()
+            return HttpResponse("删除成功")
+        student_name = request.POST['student_name']
         class_id = request.POST['class_id']
         admin_id = request.POST['admin_id']
 

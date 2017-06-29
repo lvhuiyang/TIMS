@@ -40,6 +40,7 @@
                     <form role="form" action="{{ url('student_info') }}" method="post">
                         {{ csrf_input }}
                         <input type="hidden" name="student_id" value="{{ detail_student.id }}"/>
+                        <input type="hidden" name="type" value=""/>
                         <div class="form-group">
                             <label for="student_name">学生姓名</label>
                             <input type="text" class="form-control" id="student_name"
@@ -76,10 +77,18 @@
             </div>
         {% endif %}
     </div>
+    {{ csrf_input }}
     <script type="text/javascript">
         $(document).ready(function () {
             $(".delete").click(function () {
-                alert("存在关联信息的数据不可删除");
+                var student_id = $(this).parent().parent().find(".student_id").text();
+                var csrf_key = $("input[name$='csrfmiddlewaretoken']").attr("value");
+                var data = {"csrfmiddlewaretoken": csrf_key, "student_id": student_id, "type": "delete"};
+                $.post("/info/student/", data, function (result) {
+                    alert(result);
+                });
+                redirect_url = "/info/student";
+                window.location.href = redirect_url;
             });
 
             $(".detail_show").click(function () {
