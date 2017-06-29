@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}算法展示{% endblock %}
+
+{% block main %}
+    <link href="{{ static('/css/ui.fancytree.css') }}" type="text/css" rel="stylesheet"/>
+    <link href="http://wwwendt.de/tech/fancytree/src/skin-win8/ui.fancytree.css" type="text/css" rel="stylesheet"/>
+    <script src="{{ static('/js/jquery.fancytree-all-deps.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#tree").fancytree();
+        });
+    </script>
+
+    <div class="container">
+        <div id="tree">
+            <ul id="treeData" style="display: none;">
+                <li class="folder">计算机科学与技术学院
+                    <ul>
+                        <li class="folder">计算机科学与技术
+                            <ul>
+                                <li class="folder">计科1401
+                                    <ul>
+                                        <li>同学A</li>
+                                        <li>同学B</li>
+                                        <li>同学C</li>
+                                    </ul>
+                                </li>
+                                <li class="folder">计科1401
+                                    <ul>
+                                        <li>同学D</li>
+                                        <li>同学E</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="folder">软件工程
+                            <ul>
+                                <li class="folder">软件1401
+                                    <ul>
+                                        <li>同学F</li>
+                                        <li>同学G</li>
+                                    </ul>
+                                </li>
+                                <li class="folder">软件1402
+                                    <ul>
+                                        <li>同学H</li>
+                                        <li>同学I</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        {{ csrf_input }}
+        <div style="margin-top: 50px">
+            <button id="pre" class="btn btn-default" style="width: 100px; margin-left: 5px">前序遍历</button>
+            <button id="mid" class="btn btn-warning" style="width: 100px; margin-left: 5px">中序遍历</button>
+            <button id="post" class="btn btn-info" style="width: 100px; margin-left: 5px">后序遍历</button>
+        </div>
+
+        <p id="access_note" style="font-size: 20px; margin-top: 30px; margin-bottom: 10px; color: #e97e32">遍历结果</p>
+        <p id="access_result" style="font-size: 16px; margin-top: 10px; color: #2b2b28"></p>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#access_note").hide();
+            var csrf_key = $("input[name$='csrfmiddlewaretoken']").attr("value");
+            var data = {"csrfmiddlewaretoken": csrf_key};
+
+            $("#pre").click(function () {
+                data["type"] = "pre";
+                $("#access_note").show();
+                $.post("/tree/", data, function (result) {
+                    $("#access_result").text(result);
+                });
+            });
+
+            $("#mid").click(function () {
+                data["type"] = "mid";
+                $("#access_note").show();
+                $.post("/tree/", data, function (result) {
+                    $("#access_result").text(result);
+                });
+            });
+
+            $("#post").click(function () {
+                data["type"] = "post";
+                $("#access_note").show();
+                $.post("/tree/", data, function (result) {
+                    $("#access_result").text(result);
+                });
+            });
+        });
+    </script>
+{% endblock %}

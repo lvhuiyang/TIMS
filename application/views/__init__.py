@@ -1,6 +1,7 @@
 from .user import CheckUserAuthenticatedMixin, Base, Index, Login, Logout, MyInfo, ChangePassword
 from .info import InstituteInfoView, MajorInfoView, ClassInfoView, TeacherInfoView, StudentInfoView
 from .exam import ExamView, ExamPointView
+from .tree import TreeView
 
 __all__ = [
     CheckUserAuthenticatedMixin,
@@ -16,5 +17,6 @@ __all__ = [
     TeacherInfoView,
     StudentInfoView,
     ExamView,
-    ExamPointView
+    ExamPointView,
+    TreeView
 ]
